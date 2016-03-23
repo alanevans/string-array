@@ -1,0 +1,37 @@
+{
+    "name": "ale/string-array",
+    "type": "library",
+    "description": "",
+    "homepage": "https://github.com/ale/string-array",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "See contributors",
+            "homepage": "https://github.com/ale/string-array/graphs/contributors"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/ale/string-array/issues"
+    },
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "require-dev": {
+        "pdepend/pdepend": "~1.0",
+        "phploc/phploc": "~2.0",
+        "phpmd/phpmd": "~1.0",
+        "phpunit/phpunit": "~3.0",
+        "scrutinizer/ocular": "~1.0",
+        "sebastian/phpcpd": "~2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "StringArray\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "StringArray\\Test\\": "test/"
+        }
+    }
+}
