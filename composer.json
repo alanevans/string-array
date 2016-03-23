@@ -1,17 +1,17 @@
 {
-    "name": "ale/string-array",
+    "name": "alanevans/string-array",
     "type": "library",
     "description": "",
-    "homepage": "https://github.com/ale/string-array",
+    "homepage": "https://github.com/alanevans/string-array",
     "license": "MIT",
     "authors": [
         {
             "name": "See contributors",
-            "homepage": "https://github.com/ale/string-array/graphs/contributors"
+            "homepage": "https://github.com/alanevans/string-array/graphs/contributors"
         }
     ],
     "support": {
-        "issues": "https://github.com/ale/string-array/issues"
+        "issues": "https://github.com/alanevans/string-array/issues"
     },
     "require": {
         "php": ">=5.3.0"
