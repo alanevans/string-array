@@ -1,5 +1,5 @@
 {
-    "name": "alanevans/string-array",
+    "name": "ale/string-array",
     "type": "library",
     "description": "",
     "homepage": "https://github.com/alanevans/string-array",
@@ -26,7 +26,7 @@
     },
     "autoload": {
         "psr-4": {
-            "StringArray\\": "src/"
+            "ale\\StringArray\\": "src/"
         }
     },
     "autoload-dev": {
