@@ -104,10 +104,19 @@ class StringArray
         return ($i * $this->height + $j) * $this->cellSize;
     }
 
+    /**
+     * Dump the internal storage, replacing some unprintable characters.
+     */
     public function dump() {
         var_dump(str_replace(chr(0), '*', $this->data));
     }
 
+    /**
+     * Gets the size of the internal storage of the array.
+     *
+     * @return int
+     *   The size, in bytes, taken by the internal array storage.
+     */
     public function size() {
         return strlen($this->data);
     }
