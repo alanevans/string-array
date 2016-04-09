@@ -17,8 +17,8 @@ class StringArrayTest extends \PHPUnit_Framework_TestCase
    */
   public function testStoreRetrieveUInt32()
   {
-    $m = mt_rand(1000, 2000);
-    $n = mt_rand(1000, 2000);
+    $m = mt_rand(100, 200);
+    $n = mt_rand(100, 200);
 
     // This array stores a nested array of values.
     $tmp = array();
