@@ -40,7 +40,31 @@ class StringArray
      */
     private $data = '';
 
-    public function __construct($width, $height, $cell_size = 4) {
+    /**
+     * A cache of the unprintable ASCII characters.
+     *
+     * @var array
+     */
+    private $unprintableChars = array();
+
+    /**
+     * The type of data this StringArray can handle.
+     *
+     * @var string
+     */
+    private $type = 'UINT32';
+
+    /**
+     * List of types supported by this class.
+     *
+     * @var array
+     */
+    private $types = array(
+        'UINT32' => array('size' => 4, 'format' => 'L'),
+        'DOUBLE' => array('size' => 8, 'format' => 'd'),
+    );
+
+    public function __construct($width, $height, $type = 'UINT32') {
         // @todo - handle type and cell size internally.
 
         // Initialize the string so that PHP won't think it's an array when we
@@ -48,7 +72,9 @@ class StringArray
         $this->data = str_pad('', 1, chr(0));
         $this->width = $width;
         $this->height = $height;
-        $this->cellSize = $cell_size;
+        $this->type = $type;
+        // @TODO - validate types.
+        $this->cellSize = $this->types[$type]['size'];
     }
 
     /**
@@ -65,13 +91,12 @@ class StringArray
         // @todo - validate that the passed value fits in the dimensions.
         $index = $this->getIndex($i, $j);
         // @todo - generalise hardcoded type.
-        $encoded = pack('L', $value);
+        $encoded = pack($this->types[$this->type]['format'], $value);
         // I think this is the fastest way to splice this value into storage,
         // but maybe worth checking.
-        $this->data[$index] = $encoded[0];
-        $this->data[$index + 1] = $encoded[1];
-        $this->data[$index + 2] = $encoded[2];
-        $this->data[$index + 3] = $encoded[3];
+        for ($i = 0; $i < $this->types[$this->type]['size']; ++$i) {
+            $this->data[$index + $i] = $encoded[$i];
+        }
     }
 
     /**
@@ -86,8 +111,10 @@ class StringArray
      */
     public function retrieve($i, $j) {
         $index = $this->getIndex($i, $j);
-        $encoded = substr($this->data, $index, 4);
-        return unpack('Lval', $encoded)['val'];
+        $encoded = substr($this->data, $index, $this->types[$this->type]['size']);
+        // Appending "value" to the unpack format forces the result to be in the
+        // returned array under that key.
+        return unpack($this->types[$this->type]['format'] . 'value', $encoded)['value'];
     }
 
     /**
@@ -108,7 +135,13 @@ class StringArray
      * Dump the internal storage, replacing some unprintable characters.
      */
     public function dump() {
-        var_dump(str_replace(chr(0), '*', $this->data));
+        // Set up the excluded characters list just once if it hasn't been set.
+        if (empty($this->unprintableChars)) {
+            for ($i = 0; $i <= 31; ++$i) {
+                $this->unprintableChars[] = chr($i);
+            }
+        }
+        return str_replace($this->unprintableChars, '*', $this->data);
     }
 
     /**
